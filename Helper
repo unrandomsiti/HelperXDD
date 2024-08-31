@@ -4,62 +4,108 @@ local character = player.Character or player.CharacterAdded:Wait()
 local HRP = character:WaitForChild("HumanoidRootPart")
 local GUI = Instance.new("ScreenGui", StarterGUI)
 local Frame = Instance.new("Frame", GUI)
-local TextLabel = Instance.new("TextLabel", Frame)
+local TextLabelH = Instance.new("TextLabel", Frame)
+local TextLabelTP = Instance.new("TextLabel", Frame)
 local TextButtonX = Instance.new("TextButton", Frame)
 local TextButtonP = Instance.new("TextButton", Frame)
- 
+local TextButtonTP = Instance.new("TextButton", Frame)
+local TextBoxTP = Instance.new("TextBox", Frame)
+
 local UserInputService = game:GetService("UserInputService")
 local isMobil = false
 local isPC = false
- 
+
 if UserInputService.TouchEnabled then
 	isMobil = true
 elseif UserInputService.KeyboardEnabled then
 	isPC = true
 end
- 
+
+local function Teleport()
+	local input = TextBoxTP.Text
+	local Coordenadas = string.split(input, ",")
+	if #Coordenadas == 3 then
+		local x = tonumber(Coordenadas[1])
+		local y = tonumber(Coordenadas[2])
+		local z = tonumber(Coordenadas[3])
+		if x and y and z and character then
+			HRP.CFrame = CFrame.new(x, y, z)
+		else
+			TextBoxTP.Text = "ERROR"
+		end
+	end
+end
+
 local function cerrar()
 	GUI:Destroy()
 end
- 
+
 local function Position()
 	print(HRP.Position)
 end
- 
-Frame.Size = UDim2.new(0.318, 0,0.394, 0)
-Frame.Position = UDim2.new(0.124, 0,0.081, 0)
+
+Frame.Size = UDim2.new(0.318, 0,0.485, 0)
+Frame.Position = UDim2.new(0.093, 0,0.061, 0)
 Frame.BackgroundColor3 = Color3.new(0.203922, 0.203922, 0.203922)
 Frame.BorderSizePixel = 2
- 
+
 if isPC == true then
-	TextLabel.Size = UDim2.new(1.017, 0,0.289, 0)
-	TextLabel.Position = UDim2.new(-0.007, 0,-0.005, 0)
-	TextLabel.BackgroundColor3 = Color3.new(0.0705882, 0.0705882, 0.0705882)
-	TextLabel.TextColor3 = Color3.new(255,255,255)
-	TextLabel.TextSize = 21
-	TextLabel.Text = "Helper Teleport Script"
+	TextLabelH.Size = UDim2.new(1.017, 0,0.289, 0)
+	TextLabelH.Position = UDim2.new(-0.007, 0,-0.005, 0)
+	TextLabelH.BackgroundColor3 = Color3.new(0.0705882, 0.0705882, 0.0705882)
+	TextLabelH.TextColor3 = Color3.new(255,255,255)
+	TextLabelH.TextSize = 21
+	TextLabelH.Text = "Helper Teleport Script"
+	
+	TextLabelTP.Size = UDim2.new(1.01, 0,0.18, 0)
+	TextLabelTP.Position = UDim2.new(-0.007, 0,0.531, 0)
+	TextLabelTP.BackgroundColor3 = Color3.new(0.0666667, 0.0666667, 0.0666667)
+	TextLabelTP.BackgroundTransparency = 0.5
+	TextLabelTP.TextColor3 = Color3.new(255,255,255)
+	TextLabelTP.Text = "Teleport"
+	TextLabelTP.TextSize = 16
 end
- 
+
 if isMobil == true then
-	TextLabel.Size = UDim2.new(1.017, 0,0.289, 0)
-	TextLabel.Position = UDim2.new(-0.007, 0,-0.005, 0)
-	TextLabel.BackgroundColor3 = Color3.new(0.0705882, 0.0705882, 0.0705882)
-	TextLabel.TextColor3 = Color3.new(255,255,255)
-	TextLabel.TextSize = 16
-	TextLabel.Text = "Helper Teleport Script"
+	TextLabelH.Size = UDim2.new(1.017, 0,0.289, 0)
+	TextLabelH.Position = UDim2.new(-0.007, 0,-0.005, 0)
+	TextLabelH.BackgroundColor3 = Color3.new(0.0705882, 0.0705882, 0.0705882)
+	TextLabelH.TextColor3 = Color3.new(255,255,255)
+	TextLabelH.TextSize = 16
+	TextLabelH.Text = "Helper Teleport Script"
+	
+	TextLabelTP.Size = UDim2.new(1.01, 0,0.18, 0)
+	TextLabelTP.Position = UDim2.new(-0.007, 0,0.531, 0)
+	TextLabelTP.BackgroundColor3 = Color3.new(0.0666667, 0.0666667, 0.0666667)
+	TextLabelTP.BackgroundTransparency = 0.5
+	TextLabelTP.TextColor3 = Color3.new(255,255,255)
+	TextLabelTP.Text = "Teleport"
+	TextLabelTP.TextSize = 16
 end
- 
-TextButtonX.Size = UDim2.new(0.114, 0,0.186, 0)
-TextButtonX.Position = UDim2.new(0.946, 0,-0.098, 0)
+
+TextButtonX.Size = UDim2.new(0.114, 0,0.117, 0)
+TextButtonX.Position = UDim2.new(0.946, 0,-0.053, 0)
 TextButtonX.BackgroundColor3 = Color3.new(255,0,0)
 TextButtonX.Text = "X"
 TextButtonX.TextSize = 24
 TextButtonX.MouseButton1Click:Connect(cerrar)
- 
-TextButtonP.Size = UDim2.new(0.807, 0,0.32, 0)
-TextButtonP.Position = UDim2.new(0.095, 0,0.49, 0)
+
+TextButtonP.Size = UDim2.new(0.807, 0,0.189, 0)
+TextButtonP.Position = UDim2.new(0.095, 0,0.314, 0)
 TextButtonP.BackgroundColor3 = Color3.new(0.0705882, 0.0705882, 0.0705882)
 TextButtonP.TextColor3 = Color3.new(255,255,255)
 TextButtonP.Text = "Imprimir Posicion"
 TextButtonP.TextSize = 18
 TextButtonP.MouseButton1Click:Connect(Position)
+
+TextBoxTP.Size = UDim2.new(0.626, 0,0.117, 0)
+TextBoxTP.Position = UDim2.new(0.252, 0,0.8, 0)
+TextBoxTP.BackgroundColor3 = Color3.new(255,255,255)
+TextBoxTP.Text = "Cordenadas . . . ."
+TextBoxTP.TextSize = 16
+
+TextButtonTP.Size = UDim2.new(0.114, 0,0.117, 0)
+TextButtonTP.Position = UDim2.new(0.041, 0,0.801, 0)
+TextButtonTP.BackgroundColor3 = Color3.new(0.301961, 1, 0)
+TextButtonTP.Text = ""
+TextButtonTP.MouseButton1Click:Connect(Teleport)
